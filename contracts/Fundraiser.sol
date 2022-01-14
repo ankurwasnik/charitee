@@ -1,8 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 import "openzeppelin-solidity/contracts/access/Ownable.sol";
+import "openzeppelin-solidity/contracts/utils/math/SafeMath.sol" ;
 
 contract Fundraiser is Ownable {
+    using SafeMath for uint256 ;
+
     struct Donation {
         uint256 value;
         //uint256 conversionRate;
@@ -11,6 +14,9 @@ contract Fundraiser is Ownable {
 
     mapping(address => Donation[]) private _donations;
 
+    uint256 public totalDonations ;
+    uint256 public donationCount ;
+
     string public name;
     string public url;
     string public imageUrl;
@@ -18,6 +24,8 @@ contract Fundraiser is Ownable {
     address payable public beneficiary;
     address public _owner;
 
+    event DonationReceived(address indexed donor , uint256 value) ;
+    event WithdrawFunds(uint256 indexed balance) ;
     constructor(
         string memory _name,
         string memory _url,
@@ -48,6 +56,9 @@ contract Fundraiser is Ownable {
             date: block.timestamp
         });
         _donations[msg.sender].push(newDonation);
+        totalDonations = totalDonations.add(msg.value);
+        donationCount++ ;
+        emit DonationReceived(msg.sender , msg.value) ;
     }
     function myDonations( ) public view  returns(uint256[] memory values, uint256[] memory dates) {
         uint256 count = myDonationsCount();
@@ -59,5 +70,16 @@ contract Fundraiser is Ownable {
             dates[i] = donation.date ;
         }
         return (values,dates);
+    }
+
+    function withdraw() public onlyOwner {
+        uint256 balance = address(this).balance ;
+        beneficiary.transfer(balance) ;
+        emit WithdrawFunds(balance) ;
+    }
+    
+     fallback( ) external payable {
+        totalDonations = totalDonations.add(msg.value);
+        donationCount++ ;
     }
 }
