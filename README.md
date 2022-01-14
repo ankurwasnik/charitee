@@ -17,4 +17,4 @@ You can provide your suggestions on my twitter handle or email.
 
 ## Contact
 Author : Ankur Wasnik\
-Twitter : [@ankurwasnik358](https://twitter/ankurwasnik358)
+Twitter : [@ankurwasnik358](https://twitter.com/ankurwasnik358)
