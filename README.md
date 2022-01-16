@@ -10,8 +10,8 @@ To be written at finizaling project
 - [x] Withdraw funds function
 - [x] Migrating FundraiserFactory contract
 - [x] Creating Fundraisers with the **Factory Pattern**
-- [ ] View Available Fundraisers function
-- [ ] Setting up local UI [[test]] 
+- [x] View Available Fundraisers function
+- [ ] Frontend development using ReactJS 
 ## Suggestions | Feedback
 You can provide your suggestions on my twitter handle or email.
 
